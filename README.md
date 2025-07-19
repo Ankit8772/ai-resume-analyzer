@@ -62,6 +62,12 @@ This section provides a comprehensive breakdown of your resume's strengths and a
 
 Get insights into how well your resume performs against Applicant Tracking Systems, along with personalized suggestions to enhance its relevance for specific job roles.
 
+<img width="1889" height="869" alt="Screenshot 2025-07-20 040605" src="https://github.com/user-attachments/assets/43e47348-80e0-41fa-9958-5291a1752b99" />
+
+<img width="1847" height="848" alt="Screenshot 2025-07-20 040623" src="https://github.com/user-attachments/assets/b0440de5-1515-4e73-92db-8eaf1bf9ae74" />
+
+
+
 -----
 
 ## 📦 Getting Started (Local Development)
