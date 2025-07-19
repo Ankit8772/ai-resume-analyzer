@@ -1,38 +1,47 @@
-import React from "react";
+import {Link} from "react-router";
+import ScoreCircle from "~/components/ScoreCircle";
+import {useEffect, useState} from "react";
+import {usePuterStore} from "~/lib/puter";
 
-interface Resume {
-    id: string;
-    companyName: string;
-    jobTitle: string;
-    feedback: {
-        overallScore: number;
-    };
-    imagePath: string; // ✅ expects something like "resume01.png"
-}
+const ResumeCard = ({ resume: { id, companyName, jobTitle, feedback, imagePath } }: { resume: Resume }) => {
+    const { fs } = usePuterStore();
+    const [resumeUrl, setResumeUrl] = useState('');
 
-const ResumeCard: React.FC<{ resume: Resume }> = ({ resume }) => {
-    const { id, companyName, jobTitle, feedback, imagePath } = resume;
+    useEffect(() => {
+        const loadResume = async () => {
+            const blob = await fs.read(imagePath);
+            if(!blob) return;
+            let url = URL.createObjectURL(blob);
+            setResumeUrl(url);
+        }
+
+        loadResume();
+    }, [imagePath]);
 
     return (
-        <div className="resume-card">
-            <div className="resume-card-header flex justify-between items-center">
-                <div>
-                    <h2 className="font-bold text-black">{companyName}</h2>
-                    <h3 className="text-gray-500">{jobTitle}</h3>
+        <Link to={`/resume/${id}`} className="resume-card animate-in fade-in duration-1000">
+            <div className="resume-card-header">
+                <div className="flex flex-col gap-2">
+                    {companyName && <h2 className="!text-black font-bold break-words">{companyName}</h2>}
+                    {jobTitle && <h3 className="text-lg break-words text-gray-500">{jobTitle}</h3>}
+                    {!companyName && !jobTitle && <h2 className="!text-black font-bold">Resume</h2>}
                 </div>
-                <div>
-                    <span className="text-xl">{feedback.overallScore}</span>
+                <div className="flex-shrink-0">
+                    <ScoreCircle score={feedback.overallScore} />
                 </div>
             </div>
-            <div className="w-full h-[300px] mt-2">
-                <img
-                    src={`/${imagePath}`} // ✅ correct path to public folder image
-                    alt="Resume"
-                    className="w-full h-full object-cover"
-                />
-            </div>
-        </div>
-    );
-};
-
-export default ResumeCard;
+            {resumeUrl && (
+                <div className="gradient-border animate-in fade-in duration-1000">
+                    <div className="w-full h-full">
+                        <img
+                            src={resumeUrl}
+                            alt="resume"
+                            className="w-full h-[350px] max-sm:h-[200px] object-cover object-top"
+                        />
+                    </div>
+                </div>
+            )}
+        </Link>
+    )
+}
+export default ResumeCard
