@@ -1,6 +1,4 @@
-Yes, I can integrate the provided screenshots into the README file as app working previews. Here's the updated README with the images included:
 
------
 
 # 🩺 The Resume Doctor
 
